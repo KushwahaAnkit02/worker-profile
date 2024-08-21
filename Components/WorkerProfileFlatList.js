@@ -8,9 +8,10 @@ const WorkerProfileFlatList = ({ checkWorkerRole }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.itemContainer}>
+        <Text style={styles.flagImage}>{item?.countryFlag}</Text>
         <Image
           source={{
-            uri: item?.profileImage,
+            uri: `https://xsgames.co/randomusers/assets/avatars/${item?.gender}/${item?.id}.jpg`,
           }}
           style={styles.image}
         />
@@ -41,14 +42,22 @@ const styles = StyleSheet.create({
   },
   image: {
     marginHorizontal: 10,
-    height: 100,
-    width: 100,
+    height: 60,
+    width: 60,
     borderRadius: 50,
     borderWidth: 2,
     borderColor: "black",
   },
+  flagImage: {
+    position: "absolute",
+    top: -5,
+    right: 3,
+    zIndex: 1,
+    borderRadius: 10,
+  },
   name: {
     marginTop: 5,
+    fontSize: 10,
     textAlign: "center",
   },
 });

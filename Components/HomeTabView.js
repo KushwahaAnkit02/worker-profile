@@ -30,7 +30,7 @@ export default function HomeTabView() {
   ]);
 
   const renderTabBar = (props) => (
-    <View style={styles.tabBarView}>
+    <View style={[styles.tabBarView, { width: layout.width }]}>
       <TabBar
         {...props}
         activeColor="red"
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     },
   },
   tabBarView: {
-    width: "50%",
     marginLeft: "auto",
     marginRight: "auto",
     backgroundColor: "red",

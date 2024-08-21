@@ -1,66 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Image,
-  ScrollView,
+  SafeAreaView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import { workerCategories, workerProfiles } from "../utills/WorkersData";
+import { workerProfiles } from "../utills/WorkersData";
 import Feather from "@expo/vector-icons/Feather";
 import WorkerProfileFlatList from "./WorkerProfileFlatList";
+import CategoryCarousel from "./CategoryCarousel";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const Categories = () => {
-  const { categories } = workerCategories;
   const { workers } = workerProfiles;
   const [inputText, setInputText] = useState("");
-
   const [checkWorkerRole, setCheckWorkerRole] = useState("");
 
   const handleFindeWorker = (text) => {
     try {
-      const filteredWorker = workers.filter((worker) => worker.role === text);
+      const filteredWorker = workers.filter((worker) =>
+        worker.role.includes(text ?? inputText)
+      );
       setCheckWorkerRole(filteredWorker);
-      setInputText(filteredWorker[0].role);
     } catch (error) {
       console.log(error.message);
     }
   };
+  useEffect(() => {
+    handleFindeWorker();
+  }, [inputText]);
 
   return (
-    <>
-      <View style={styles.category}>
-        {categories?.map((data) => {
-          return (
-            <TouchableOpacity
-              key={data.id}
-              onPress={() => handleFindeWorker(data?.Worker_Role)}
-            >
-              <Image
-                source={{ uri: data?.icon }}
-                style={styles.category.image}
-              />
-              <Text
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                {data?.Worker_Role}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+    <SafeAreaView>
+      <CategoryCarousel setInputText={setInputText} />
       <View style={styles.mainView}>
         <View style={styles.inputView}>
           <Feather name="search" size={25} color="black" />
           <TextInput
             style={styles.input}
-            placeholder={!inputText ? "Search" : inputText}
-            onChangeText={(text) => handleFindeWorker(text)}
+            value={inputText}
+            placeholder={"Search"}
+            onChangeText={(text) => setInputText(text.trim())}
           />
+          {inputText && (
+            <TouchableOpacity
+              style={{ right: 20 }}
+              onPress={() => setInputText("")}
+            >
+              <AntDesign name="close" size={24} color="black" />
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.filter}>
           <Feather
@@ -77,7 +67,7 @@ const Categories = () => {
       <View style={styles.worker_profile}>
         <WorkerProfileFlatList checkWorkerRole={checkWorkerRole} />
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -87,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    width: "50%",
+    width: "90%",
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: 20,
@@ -126,7 +116,7 @@ const styles = StyleSheet.create({
     },
   },
   worker_profile: {
-    width: "50%",
+    width: "100%",
     marginLeft: "auto",
     marginRight: "auto",
     padding: 20,
