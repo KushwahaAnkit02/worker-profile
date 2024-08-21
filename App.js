@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import HomeTabView from "./Components/HomeTabView";
-
 export default function App() {
   return (
     <View style={styles.container}>

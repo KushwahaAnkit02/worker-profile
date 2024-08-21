@@ -3,27 +3,27 @@ export const workerCategories = {
     {
       id: 1,
       Worker_Role: "Astrologer",
-      icon: "https://example.com/icons/astrologer.png",
+      icon: "https://i.pravatar.cc/300 ",
     },
     {
       id: 2,
       Worker_Role: "Makeup Artist",
-      icon: "https://example.com/icons/makeup_artist.png",
+      icon: "https://i.pravatar.cc/300",
     },
     {
       id: 3,
       Worker_Role: "Photographer",
-      icon: "https://example.com/icons/photographer.png",
+      icon: "https://i.pravatar.cc/300",
     },
     {
       id: 4,
       Worker_Role: "Mehndi Artist",
-      icon: "https://example.com/icons/mehndi_artist.png",
+      icon: "https://i.pravatar.cc/300",
     },
     {
       id: 5,
       Worker_Role: "Assistant",
-      icon: "https://example.com/icons/assistant.png",
+      icon: "https://i.pravatar.cc/300 ",
     },
   ],
 };

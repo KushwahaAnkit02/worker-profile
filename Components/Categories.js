@@ -1,28 +1,66 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TextInput, View } from "react-native";
-import { workerCategories } from "../utills/WorkersData";
+import React, { useState } from "react";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { workerCategories, workerProfiles } from "../utills/WorkersData";
 import Feather from "@expo/vector-icons/Feather";
-import Carousel from "react-native-reanimated-carousel";
+import WorkerProfileFlatList from "./WorkerProfileFlatList";
 
 const Categories = () => {
-  const catagory = workerCategories;
-  const [search, setSearch] = useState("");
+  const { categories } = workerCategories;
+  const { workers } = workerProfiles;
+  const [inputText, setInputText] = useState("");
 
-  useEffect(() => {
-    (() => {
-      console.log(catagory);
-    })();
-  }, []);
+  const [checkWorkerRole, setCheckWorkerRole] = useState("");
+
+  const handleFindeWorker = (text) => {
+    try {
+      const filteredWorker = workers.filter((worker) => worker.role === text);
+      setCheckWorkerRole(filteredWorker);
+      setInputText(filteredWorker[0].role);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
-    <ScrollView
-      style={{
-        flex: 1,
-      }}
-    >
+    <>
+      <View style={styles.category}>
+        {categories?.map((data) => {
+          return (
+            <TouchableOpacity
+              key={data.id}
+              onPress={() => handleFindeWorker(data?.Worker_Role)}
+            >
+              <Image
+                source={{ uri: data?.icon }}
+                style={styles.category.image}
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                {data?.Worker_Role}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
       <View style={styles.mainView}>
         <View style={styles.inputView}>
           <Feather name="search" size={25} color="black" />
-          <TextInput style={styles.input} placeholder="Search"></TextInput>
+          <TextInput
+            style={styles.input}
+            placeholder={!inputText ? "Search" : inputText}
+            onChangeText={(text) => handleFindeWorker(text)}
+          />
         </View>
         <View style={styles.filter}>
           <Feather
@@ -35,7 +73,11 @@ const Categories = () => {
           />
         </View>
       </View>
-    </ScrollView>
+
+      <View style={styles.worker_profile}>
+        <WorkerProfileFlatList checkWorkerRole={checkWorkerRole} />
+      </View>
+    </>
   );
 };
 
@@ -67,6 +109,27 @@ const styles = StyleSheet.create({
   filter: {
     backgroundColor: "#ccd3de",
     borderRadius: 10,
+  },
+  category: {
+    width: "50%",
+    paddingVertical: 10,
+    flexDirection: "row",
+    marginLeft: "auto",
+    marginRight: "auto",
+    image: {
+      marginHorizontal: 10,
+      height: 100,
+      width: 100,
+      borderRadius: 50,
+      borderWidth: 2,
+      borderColor: "black",
+    },
+  },
+  worker_profile: {
+    width: "50%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    padding: 20,
   },
 });
 
