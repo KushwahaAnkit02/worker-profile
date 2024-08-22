@@ -1,5 +1,6 @@
 # Installation
-git clone https://github.com/your-username/worker-profile-project.git
+git clone https://github.com/KushwahaAnkit02/worker-profile.git
+## cd worker-profile
 cd worker-profile-project
-# yarn $ npm install
-# yarn start #npm start 
+## yarn $ npm install
+## yarn start &npm start 
